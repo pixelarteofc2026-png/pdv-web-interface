@@ -1,0 +1,209 @@
+/* RESPONSIVO */
+
+/* TABLET */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 250px;
+    }
+
+    .sales-container {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .payment-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        max-height: 70px;
+        padding: 10px 20px;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .sidebar.open {
+        max-height: 500px;
+    }
+
+    .sidebar-header {
+        margin-bottom: 15px;
+    }
+
+    .logo-area h1 {
+        font-size: 1.3rem;
+    }
+
+    .btn-toggle-sidebar {
+        display: block;
+    }
+
+    .sidebar-nav,
+    .sidebar-footer {
+        display: none;
+    }
+
+    .sidebar.open .sidebar-nav,
+    .sidebar.open .sidebar-footer {
+        display: block;
+    }
+
+    .main-content {
+        flex: 1;
+    }
+
+    .top-header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .header-left {
+        width: 100%;
+    }
+
+    .user-info {
+        font-size: 0.85rem;
+    }
+
+    .content-wrapper {
+        padding: 15px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-table {
+        font-size: 0.85rem;
+    }
+
+    .cart-table th,
+    .cart-table td {
+        padding: 8px;
+    }
+
+    .payment-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-large {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+
+    #pageTitle {
+        font-size: 1.2rem;
+    }
+
+    .table {
+        font-size: 0.85rem;
+    }
+
+    .table th,
+    .table td {
+        padding: 8px;
+    }
+
+    .sidebar-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 15px;
+        padding-top: 15px;
+    }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+    .top-header {
+        padding: 10px;
+    }
+
+    .content-wrapper {
+        padding: 10px;
+    }
+
+    .card {
+        padding: 12px;
+    }
+
+    .card h3 {
+        font-size: 1.1rem;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .payment-btn span:first-child {
+        font-size: 1.2rem;
+    }
+
+    .payment-btn {
+        padding: 10px;
+        font-size: 0.75rem;
+    }
+
+    .modal-content {
+        padding: 20px;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+    }
+
+    .input {
+        padding: 10px;
+        font-size: 0.95rem;
+    }
+}
+
+/* LANDSCAPE */
+@media (max-height: 600px) and (orientation: landscape) {
+    .sidebar {
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    .content-wrapper {
+        padding: 15px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+}

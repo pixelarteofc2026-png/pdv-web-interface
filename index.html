@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDV Completo - Sistema de Ponto de Venda</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-area">
+                    <h1>🏪 PDV</h1>
+                    <p>Sistema de Vendas</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#home" class="nav-link active" data-section="home">🏠 Início</a></li>
+                    <li><a href="#vendas" class="nav-link" data-section="vendas">💳 Vendas</a></li>
+                    <li><a href="#caixa" class="nav-link" data-section="caixa">💰 Caixa</a></li>
+                    <li><a href="#estoque" class="nav-link" data-section="estoque">📦 Estoque</a></li>
+                    <li><a href="#relatorios" class="nav-link" data-section="relatorios">📊 Relatórios</a></li>
+                    <li><a href="#config" class="nav-link" data-section="config">⚙️ Configurações</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-danger">Sair</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button id="toggleSidebar" class="btn-toggle-sidebar">☰</button>
+                    <h2 id="pageTitle">Bem-vindo ao PDV Completo</h2>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <span>Usuário: <strong id="userName">Admin</strong></span>
+                        <span class="dot">●</span>
+                        <span id="currentTime">00:00:00</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Sections -->
+            <div class="content-wrapper">
+                <!-- HOME -->
+                <section id="home-section" class="section active">
+                    <div class="dashboard-grid">
+                        <div class="card dashboard-card">
+                            <h3>💳 Vendas Hoje</h3>
+                            <p class="stat-number">R$ <span id="todaysSales">0.00</span></p>
+                            <p class="stat-label">0 vendas</p>
+                        </div>
+                        <div class="card dashboard-card">
+                            <h3>💰 Caixa</h3>
+                            <p class="stat-number">R$ <span id="cashBalance">0.00</span></p>
+                            <p class="stat-label">Saldo</p>
+                        </div>
+                        <div class="card dashboard-card">
+                            <h3>📦 Estoque</h3>
+                            <p class="stat-number"><span id="stockCount">0</span></p>
+                            <p class="stat-label">produtos</p>
+                        </div>
+                        <div class="card dashboard-card">
+                            <h3>📊 Status</h3>
+                            <p class="stat-number" style="color: #10b981;">✓</p>
+                            <p class="stat-label">Sistema Online</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VENDAS -->
+                <section id="vendas-section" class="section">
+                    <div class="card">
+                        <h3>🛒 Nova Venda</h3>
+                        <div class="sales-container">
+                            <div class="sales-form">
+                                <div class="form-group">
+                                    <label>Código do Produto</label>
+                                    <input type="text" id="productCode" placeholder="Escanear ou digitar código" class="input-large">
+                                </div>
+                                <div class="form-group">
+                                    <label>ou Procurar Produto</label>
+                                    <input type="text" id="productSearch" placeholder="Procurar por nome..." class="input">
+                                    <div id="searchResults" class="search-results"></div>
+                                </div>
+                                <button id="addProductBtn" class="btn btn-primary">+ Adicionar Produto</button>
+                            </div>
+
+                            <div class="sales-cart">
+                                <h4>🛍️ Carrinho de Vendas</h4>
+                                <table class="cart-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Produto</th>
+                                            <th>Qtd</th>
+                                            <th>Preço</th>
+                                            <th>Total</th>
+                                            <th>Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cartItems">
+                                        <tr class="empty-cart">
+                                            <td colspan="5">Nenhum produto adicionado</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="cart-summary">
+                                    <div class="summary-row">
+                                        <span>Subtotal:</span>
+                                        <span>R$ <span id="subtotal">0.00</span></span>
+                                    </div>
+                                    <div class="summary-row">
+                                        <span>Desconto:</span>
+                                        <input type="number" id="discount" min="0" value="0" class="input-small" placeholder="0.00">
+                                        <span>R$ <span id="discountTotal">0.00</span></span>
+                                    </div>
+                                    <div class="summary-row total">
+                                        <span>TOTAL:</span>
+                                        <span>R$ <span id="total">0.00</span></span>
+                                    </div>
+                                </div>
+
+                                <div class="payment-section">
+                                    <h4>Forma de Pagamento</h4>
+                                    <div class="payment-options">
+                                        <button class="payment-btn active" data-payment="dinheiro">
+                                            <span>💵</span>
+                                            <span>Dinheiro</span>
+                                        </button>
+                                        <button class="payment-btn" data-payment="credito">
+                                            <span>💳</span>
+                                            <span>Crédito</span>
+                                        </button>
+                                        <button class="payment-btn" data-payment="debito">
+                                            <span>🏧</span>
+                                            <span>Débito</span>
+                                        </button>
+                                        <button class="payment-btn" data-payment="pix">
+                                            <span>⚡</span>
+                                            <span>PIX</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="action-buttons">
+                                    <button id="finalizeSaleBtn" class="btn btn-success btn-large">✓ Finalizar Venda</button>
+                                    <button id="clearCartBtn" class="btn btn-secondary">🗑️ Limpar Carrinho</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CAIXA -->
+                <section id="caixa-section" class="section">
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>💰 Controle de Caixa</h3>
+                            <div class="form-group">
+                                <label>Saldo Atual</label>
+                                <input type="number" id="cashAmount" placeholder="0.00" class="input input-large" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Adicionar Valor</label>
+                                <input type="number" id="cashInput" placeholder="0.00" class="input">
+                            </div>
+                            <div class="form-group">
+                                <label>Descrição</label>
+                                <input type="text" id="cashDescription" placeholder="Ex: Venda 001" class="input">
+                            </div>
+                            <button id="addCashBtn" class="btn btn-primary">+ Adicionar</button>
+                        </div>
+
+                        <div class="card">
+                            <h3>📋 Movimentação</h3>
+                            <div id="movementList" class="movement-list">
+                                <p class="empty-message">Nenhuma movimentação</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ESTOQUE -->
+                <section id="estoque-section" class="section">
+                    <div class="card">
+                        <h3>📦 Gestão de Estoque</h3>
+                        <div class="search-bar">
+                            <input type="text" id="estoque-search" placeholder="Procurar produto..." class="input">
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Produto</th>
+                                    <th>Quantidade</th>
+                                    <th>Preço</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="estoque-list">
+                                <tr class="empty-row">
+                                    <td colspan="5">Nenhum produto cadastrado</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="add-product-form">
+                            <h4>➕ Adicionar Novo Produto</h4>
+                            <div class="grid-3">
+                                <div class="form-group">
+                                    <label>Código de Barras</label>
+                                    <input type="text" id="newProductCode" placeholder="123456789" class="input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Nome do Produto</label>
+                                    <input type="text" id="newProductName" placeholder="Nome" class="input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Preço (R$)</label>
+                                    <input type="number" id="newProductPrice" placeholder="0.00" class="input">
+                                </div>
+                            </div>
+                            <div class="grid-3">
+                                <div class="form-group">
+                                    <label>Estoque</label>
+                                    <input type="number" id="newProductQty" placeholder="0" class="input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Categoria</label>
+                                    <input type="text" id="newProductCategory" placeholder="Categoria" class="input">
+                                </div>
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button id="addNewProductBtn" class="btn btn-primary">Adicionar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- RELATÓRIOS -->
+                <section id="relatorios-section" class="section">
+                    <div class="card">
+                        <h3>📊 Relatórios</h3>
+                        <div class="reports-grid">
+                            <div class="report-card">
+                                <h4>Vendas do Dia</h4>
+                                <p class="report-stat">R$ <span id="report-today">0.00</span></p>
+                                <button class="btn btn-secondary">Ver Detalhes</button>
+                            </div>
+                            <div class="report-card">
+                                <h4>Vendas da Semana</h4>
+                                <p class="report-stat">R$ <span id="report-week">0.00</span></p>
+                                <button class="btn btn-secondary">Ver Detalhes</button>
+                            </div>
+                            <div class="report-card">
+                                <h4>Vendas do Mês</h4>
+                                <p class="report-stat">R$ <span id="report-month">0.00</span></p>
+                                <button class="btn btn-secondary">Ver Detalhes</button>
+                            </div>
+                            <div class="report-card">
+                                <h4>Produtos Mais Vendidos</h4>
+                                <p class="report-stat" id="top-product">--</p>
+                                <button class="btn btn-secondary">Ver Detalhes</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CONFIGURAÇÕES -->
+                <section id="config-section" class="section">
+                    <div class="card">
+                        <h3>⚙️ Configurações</h3>
+                        <div class="settings-group">
+                            <h4>Informações da Empresa</h4>
+                            <div class="form-group">
+                                <label>Nome da Empresa</label>
+                                <input type="text" id="company-name" placeholder="Seu Negócio" class="input">
+                            </div>
+                            <div class="form-group">
+                                <label>CNPJ</label>
+                                <input type="text" id="company-cnpj" placeholder="00.000.000/0000-00" class="input">
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h4>Preferências</h4>
+                            <div class="toggle-option">
+                                <label>Modo Escuro</label>
+                                <input type="checkbox" id="darkModeToggle" class="toggle">
+                            </div>
+                            <div class="toggle-option">
+                                <label>Som de Bip ao escanear</label>
+                                <input type="checkbox" id="beeperToggle" class="toggle" checked>
+                            </div>
+                        </div>
+
+                        <button id="saveConfigBtn" class="btn btn-primary">💾 Salvar Configurações</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3 id="modalTitle"></h3>
+            <p id="modalMessage"></p>
+            <button id="modalBtn" class="btn btn-primary">OK</button>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/sales.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
